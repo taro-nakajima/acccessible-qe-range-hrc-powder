@@ -1,0 +1,235 @@
+<head>
+<title >Accessible Q-E range at HRC(BL12) for powder samples</title>
+<link rel="stylesheet" type="text/css" href="./common.css">
+<script type="text/javascript" src="./HRC_QErange_powder.js?20200308"></script>
+</head>
+<body onload="draw()">
+    <div class="fullbox">
+    <table class="header_table">
+        <tr>
+            <td ><font class="mytitle">Accessible Q-E range at HRC(BL12) for powder samples</font> <font color="white">ver</font> <font color="white" id="verNum"></font></td>
+            <td class="menu_item"><a href="#sec_Inst" class="headerLink">Instrument</a></td>
+            <td class="menu_item"><a href="#sec_TOF" class="headerLink">TOF diagram</a></td>
+            <td class="menu_item"><a href="#sec_QEcuts" class="headerLink">Q-E plots</a></td>
+            <td class="dummy_text">-----</td>
+        </tr>
+    </table>
+    </div>
+<br />
+
+<div class="mainbody">
+
+
+<div class="dummy_space1" id="sec_Inst">-</div>
+<div class="dummy_space2">-</div>
+
+<div class="section_01">Instrument</div>
+<table>
+    <tr>
+        <td>
+            L<sub>1</sub> (moderator to sample) : <input type="text" size="5" id="input_L1" value="15.0"> m <br />
+            L<sub>2</sub> (sample to detector) : <input type="text" size="5" id="input_L2" value="4.0"> m <br />
+            L<sub>3</sub> (monochro chopper to sample) : <input type="text" size="5" id="input_L3" value="1.03"> m <br />
+            L<sub>T0</sub> (moderator to T<sub>0</sub> chopper) : <input type="text" size="5" id="input_LT0" value="9.0"> m <br />
+            Two-theta range : <input type="text" size="5" id="tth_min" value="3.0"> to <input type="text" size="5" id="tth_max" value="64.16"> deg <br />
+            <input type="button" value="   set   " onclick="draw()"/><br />
+            <img src="HRC_layout_v7.png"><br />
+            (Cited from <a href="https://doi.org/10.1016/j.physb.2018.11.059" target="_blank">S. Itoh <i>et al</i>. Physica B: Condensed Matter <b>568</b>, 76-80 (2019)</a>, and modified from the original version. )<br />
+            See also <a href="https://mlfinfo.jp/en/bl12/" target="_blank">Official WebSite : BL12 HRC - High Resolution Chopper Spectrometer -</a>            
+        </td>
+    </tr>
+</table>
+
+
+<div class="dummy_space1" id="sec_TOF">-</div>
+<div class="dummy_space2">-</div>
+
+<div class="section_01">TOF diagram</div>
+<table>
+        <tr>
+            <td>
+            <canvas id="CanvasTOF" width="500" height="280"></canvas><br />
+            </td>
+            <td>
+                Chopper face at t=0 :
+                <select id="chopperFace">
+                    <option value="1">Front</option>
+                    <option value="0">Back</option>
+                </select> <br />
+                Fermi chopper freq. :
+                <select id="freq">
+                    <option value="100">100 Hz</option>
+                    <option value="200">200 Hz</option>
+                    <option value="300" selected>300 Hz</option>
+                    <option value="400">400 Hz</option>
+                    <option value="500">500 Hz</option>
+                    <option value="600">600 Hz</option>
+                </select> <br />
+                T<sub>0</sub> chopper freq. :
+                <select id="T0_freq">
+                    <option value="25">25 Hz</option>
+                    <option value="50" selected>50 Hz</option>
+                    <option value="100">100 Hz</option>
+                </select> <br />
+                Target <i>E</i><sub>i</sub> : <input type="text" size="5" id="targetEi" value="40"> meV <br />
+                Upper limit of <i>E</i><sub>i</sub> : <input type="text" size="5" id="upperLimitEi" value="8000"> meV <br />
+                <input type="button" value="   set   " onclick="draw()"/><br />
+                <br />
+                <i>E</i><sub>i</sub> number offset : <input type="text" size="5" id="Ei_Num_ofst" value="0"> (for plotting)<br />
+                phase offset : <input type="text" size="8" id="offset" value="0"> ms<br />
+                <i>E</i><sub>i(1)</sub>:<input size="10" id="E1"> meV <font color="#FF0000" id="isE1Optimum"></font> <br />
+                <i>E</i><sub>i(2)</sub>:<input size="10" id="E2"> meV <font color="#FF0000" id="isE2Optimum"></font><br />
+                <i>E</i><sub>i(3)</sub>:<input size="10" id="E3"> meV <font color="#FF0000" id="isE3Optimum"></font><br />
+                <i>E</i><sub>i(4)</sub>:<input size="10" id="E4"> meV <font color="#FF0000" id="isE4Optimum"></font><br />
+                <i>E</i><sub>i(5)</sub>:<input size="10" id="E5"> meV <font color="#FF0000" id="isE5Optimum"></font>
+
+            </td>
+        </tr>
+    </table>
+
+<div class="dummy_space1" id="sec_QEcuts">-</div>
+<div class="dummy_space2">-</div>
+
+<div class="section_01"><i>Q</i>-<i>E</i> plots</div>
+<b>Target <i>E</i> (meV)</b>
+<table>
+    <tr>
+        <td align="right">
+            <i>E</i><sub>1</sub>: <input type="text" size="6" id="Et_1" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>2</sub>: <input type="text" size="6" id="Et_2" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>3</sub>: <input type="text" size="6" id="Et_3" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>4</sub>: <input type="text" size="6" id="Et_4" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>5</sub>: <input type="text" size="6" id="Et_5" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>6</sub>: <input type="text" size="6" id="Et_6" >,
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <i>E</i><sub>7</sub>: <input type="text" size="6" id="Et_7" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>8</sub>: <input type="text" size="6" id="Et_8" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>9</sub>: <input type="text" size="6" id="Et_9" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>10</sub>: <input type="text" size="6" id="Et_10" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>11</sub>: <input type="text" size="6" id="Et_11" >, 
+        </td>
+        <td align="right">
+            <i>E</i><sub>12</sub>: <input type="text" size="6" id="Et_12" > 
+        </td>
+    </tr>
+</table>
+<input type="button" value="   set   " onclick="draw()"/><br />
+<br />
+<b>Target <i>Q</i> (A<sup>-1</sup>)</b>
+<table>
+    <tr>
+        <td align="right">
+            <i>Q</i><sub>1</sub>: <input type="text" size="6" id="Qt_1" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>2</sub>: <input type="text" size="6" id="Qt_2" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>3</sub>: <input type="text" size="6" id="Qt_3" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>4</sub>: <input type="text" size="6" id="Qt_4" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>5</sub>: <input type="text" size="6" id="Qt_5" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>6</sub>: <input type="text" size="6" id="Qt_6" >,
+        </td>
+    </tr>
+    <tr>
+        <td align="right">
+            <i>Q</i><sub>7</sub>: <input type="text" size="6" id="Qt_7" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>8</sub>: <input type="text" size="6" id="Qt_8" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>9</sub>: <input type="text" size="6" id="Qt_9" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>10</sub>: <input type="text" size="6" id="Qt_10" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>11</sub>: <input type="text" size="6" id="Qt_11" >, 
+        </td>
+        <td align="right">
+            <i>Q</i><sub>12</sub>: <input type="text" size="6" id="Qt_12" > 
+        </td>
+    </tr>
+</table>
+<input type="button" value="   set   " onclick="draw()"/><br />
+
+<br />
+
+<div class="section_02"><i>E</i><sub>i(1)</sub> = <font id="E1_calc"></font> meV</div>
+<table cellpadding="5">
+    <tr>
+        <td>
+            <canvas id="CanvasQE1" width="800" height="390" class="box"></canvas>
+        </td>
+    </tr>
+</table>
+<br />
+<div class="section_02"><i>E</i><sub>i(2)</sub> = <font id="E2_calc"></font> meV</div>
+<table cellpadding="5">
+    <tr>    
+        <td>
+            <canvas id="CanvasQE2" width="800" height="390" class="box"></canvas>
+        </td>
+    </tr>
+</table>
+<br />
+<div class="section_02"><i>E</i><sub>i(3)</sub> = <font id="E3_calc"></font> meV</div>
+<table cellpadding="5">
+    <tr>    
+        <td>
+        <canvas id="CanvasQE3" width="800" height="390" class="box"></canvas>
+        </td>
+    </tr>
+</table>
+<br />
+<div class="section_02"><i>E</i><sub>i(4)</sub> = <font id="E4_calc"></font> meV</div>
+<table cellpadding="5">
+    <tr>    
+        <td>
+            <canvas id="CanvasQE4" width="800" height="390" class="box"></canvas>
+        </td>
+    </tr>
+</table>
+<br />
+<div class="section_02"><i>E</i><sub>i(5)</sub> = <font id="E5_calc"></font> meV</div>
+<table cellpadding="5">
+    <tr>    
+        <td>
+            <canvas id="CanvasQE5" width="800" height="390" class="box"></canvas>
+        </td>
+    </tr>
+</table>
+<br />
+
+
+<div class="footer"> Version <font id="verNum2"></font> by <a href="https://nakajima.issp.u-tokyo.ac.jp">T. Nakajima</a>, 2021.</div>
+</div> <!--end of mainbody-->
+</body>
