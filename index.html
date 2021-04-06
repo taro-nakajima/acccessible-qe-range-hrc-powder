@@ -41,7 +41,7 @@
             L<sub>2</sub> (sample to detector) : <input type="text" size="5" id="input_L2" value="4.0"> m <br />
             L<sub>3</sub> (monochro chopper to sample) : <input type="text" size="5" id="input_L3" value="1.03"> m <br />
             L<sub>T0</sub> (moderator to T<sub>0</sub> chopper) : <input type="text" size="5" id="input_LT0" value="9.0"> m <br />
-            Two-theta range : <input type="text" size="5" id="tth_min" value="3.0"> to <input type="text" size="5" id="tth_max" value="64.16"> deg <br />
+            Two-theta range : <input type="text" size="5" id="tth_min" value="3.0"> to <input type="text" size="5" id="tth_max" value="64.16"> deg  (wide angle: 3.0 - 64.16 deg, small angle: 0.6 - 6.8 deg)<br />
             <input type="button" value="   set   " onclick="draw()"/><br />
             <img src="HRC_layout_v7.png"><br />
             (Cited from <a href="https://doi.org/10.1016/j.physb.2018.11.059" target="_blank">S. Itoh <i>et al</i>. Physica B: Condensed Matter <b>568</b>, 76-80 (2019)</a>, and modified from the original version. )<br />
@@ -189,6 +189,13 @@
         </td>
     </tr>
 </table>
+<input type="button" value="   set   " onclick="draw()"/><br />
+
+<br />
+
+<i>Q</i><sub>max</sub>: <input type="text" size="6" id="Q_max" value="1.2"> (in <i>k</i><sub>i</sub> unit) <br />
+<i>E</i><sub>f max</sub>: <input type="text" size="6" id="Ef_max" value="1.4"> (in <i>E</i><sub>i</sub> unit), 
+<i>E</i><sub>f min</sub>: <input type="text" size="6" id="Ef_min" value="0.1"> (in <i>E</i><sub>i</sub> unit) <br />
 <input type="button" value="   set   " onclick="draw()"/><br />
 
 <br />

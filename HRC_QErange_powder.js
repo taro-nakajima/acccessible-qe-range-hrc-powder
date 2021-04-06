@@ -1,5 +1,5 @@
 //JavaScript code for calculating accessible Q-E ranges at HRC for powder samples
-const version = "0.1";
+const version = "1.0";
 const Ei_numMax=5;
 var Ei = new Array(Ei_numMax);
 const decimal_digit = 1000;
@@ -17,9 +17,11 @@ const marginY = 20;
 const TOFscale = 10.0;    // ms to pixel
 const Lscale=10.0;        // meter to pixel
 
-const Qrange_in_ki_unit = 1.2;    // the maximum of horizontal axis of the Q-E map is ki*Qrange_in_ki_unit
-const OriginX = 50;     // X origin of the Q-E map
-const OriginY = 270;    // y origin of the Q-E map
+var Qrange_in_ki_unit = 1.2;    // the maximum of horizontal axis of the Q-E map is ki*Qrange_in_ki_unit
+var Ef_min_in_ki_unit = 0.1;    // 
+var Ef_max_in_ki_unit = 1.4;    // 
+var OriginX = 50;     // X origin of the Q-E map
+var OriginY = 270;    // y origin of the Q-E map
 
 var Ltotal_R;
 var Lsc_R; 
@@ -296,6 +298,10 @@ function drawQELineCuts() {
     let canvas4 = new Array(Ei_numMax);
     let context4 = new Array(Ei_numMax);
 
+    Qrange_in_ki_unit=Number(document.getElementById("Q_max").value);
+    Ef_min_in_ki_unit=Number(document.getElementById("Ef_min").value);
+    Ef_max_in_ki_unit=Number(document.getElementById("Ef_max").value);
+
     for(var ii=0;ii<Ei_numMax;ii+=1){
         var canvasName='CanvasQE'+(Math.round(ii+1));
         canvas4[ii] = document.getElementById(canvasName);
@@ -322,7 +328,7 @@ function drawQELineCuts() {
         Q_max = ki[ii]*Qrange_in_ki_unit;
 
         for(var jj=0;jj<=Ystep;jj+=1){
-            var Ef=1.4*Ei[ii]-((1.3)*Ei[ii])/Ystep*jj;
+            var Ef=Ef_max_in_ki_unit*Ei[ii]-((Ef_max_in_ki_unit-Ef_min_in_ki_unit)*Ei[ii])/Ystep*jj;
             var kf = Math.sqrt(Ef/2.072);
             var Q = Math.sqrt(ki[ii]**2.0+kf**2.0-2.0*ki[ii]*kf*Math.cos(Math.PI/180.0*tth_min));
 
@@ -336,7 +342,7 @@ function drawQELineCuts() {
         }
 
         for(var jj=Ystep;jj>=0;jj-=1){
-            var Ef=1.4*Ei[ii]-((1.3)*Ei[ii])/Ystep*jj;
+            var Ef=Ef_max_in_ki_unit*Ei[ii]-((Ef_max_in_ki_unit-Ef_min_in_ki_unit)*Ei[ii])/Ystep*jj;
             var kf = Math.sqrt(Ef/2.072);
             var Q = Math.sqrt(ki[ii]**2.0+kf**2.0-2.0*ki[ii]*kf*Math.cos(Math.PI/180.0*tth_max));
 
@@ -361,6 +367,9 @@ function drawQELineCuts() {
         context4[ii].lineTo(OriginX,0);
         context4[ii].stroke();
 
+
+        OriginY=canvas4[ii].height*(1.0-Ef_min_in_ki_unit)/((Ef_max_in_ki_unit-1) + (1.0-Ef_min_in_ki_unit));
+
         context4[ii].beginPath();
         context4[ii].moveTo(OriginX,OriginY);
         context4[ii].lineTo(OriginX+canvas4[ii].width,OriginY);
@@ -371,32 +380,54 @@ function drawQELineCuts() {
         let EthickBar=5;
         let Espacing=20;
         let Qspacing=0.5;
-        if(Ei[ii]>100){
+        if(Ei[ii]*((Ef_max_in_ki_unit-1) +(1.0-Ef_min_in_ki_unit))>100){
             Espacing=50;
-            Qspacing=2;
         }
-        else if (Ei[ii]>50){
+        else if (Ei[ii]*((Ef_max_in_ki_unit-1) +(1.0-Ef_min_in_ki_unit))>50){
             Espacing=10;
-            Qspacing=1;
         }
-        else if(Ei[ii]>20){
+        else if(Ei[ii]*((Ef_max_in_ki_unit-1) +(1.0-Ef_min_in_ki_unit))>20){
             Espacing=5;
-            Qspacing=0.5;
         }
-        else if(Ei[ii]>10){
+        else if(Ei[ii]*((Ef_max_in_ki_unit-1) +(1.0-Ef_min_in_ki_unit))>10){
             Espacing=2;
-            Qspacing=0.5;
         }
-        else if(Ei[ii]>5){
+        else if(Ei[ii]*((Ef_max_in_ki_unit-1) +(1.0-Ef_min_in_ki_unit))>5){
             Espacing=1;
-            Qspacing=0.2;
+        }
+        else if(Ei[ii]*((Ef_max_in_ki_unit-1) +(1.0-Ef_min_in_ki_unit))>2){
+            Espacing=0.5;
+        }
+        else if(Ei[ii]*((Ef_max_in_ki_unit-1) +(1.0-Ef_min_in_ki_unit))>1){
+            Espacing=0.2;
         }
         else {
-            Espacing=0.5;
+            Espacing=0.1;
+        }
+
+        if(Q_max>10){
+            Qspacing=2;
+        }
+        else if (Q_max>5){
+            Qspacing=1;
+        }
+        else if(Q_max>2){
+            Qspacing=0.5;
+        }
+        else if(Q_max>1){
+            Qspacing=0.5;
+        }
+        else if(Q_max>0.5){
+            Qspacing=0.2;
+        }
+        else if(Q_max>0.1){
+            Qspacing=0.05;
+        }
+        else {
             Qspacing=0.2;
         }
 
-        let Escale = ((1.3)*Ei[ii])/canvas4[ii].height;  // energy (meV) per pixel
+        let Escale = ((Ef_max_in_ki_unit-Ef_min_in_ki_unit)*Ei[ii])/canvas4[ii].height;  // energy (meV) per pixel
         let Qscale = Q_max/(canvas4[ii].width-OriginX); 
 
         context4[ii].font = "12px sans-serif";
@@ -436,7 +467,7 @@ function drawQELineCuts() {
                 txt_ofst_x+=TextSize;
             }
 
-            context4[ii].fillText(i*Espacing,OriginX-txt_ofst_x, OriginY-Espacing/Escale*i+TextSize/2);
+            context4[ii].fillText(Math.round(i*Espacing*decimal_digit)/decimal_digit,OriginX-txt_ofst_x, OriginY-Espacing/Escale*i+TextSize/2);
         }
         //*/
         // tick marks for x(q)axis
