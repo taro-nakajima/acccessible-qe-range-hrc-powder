@@ -309,16 +309,19 @@ function drawQELineCuts() {
         Ef_min_in_ki_unit=Number(document.getElementById("Ef_min").value);
         Ef_max_in_ki_unit=Number(document.getElementById("Ef_max").value);    
     }
-    else if(document.getElementById("QErange_SA").checked){
-        Qrange_in_ki_unit=0.2;
-        Ef_min_in_ki_unit=0.7;
-        Ef_max_in_ki_unit=1.3;    
+    else {
+        if(document.getElementById('SmallAngleDet').checked){
+            Qrange_in_ki_unit=0.2;
+            Ef_min_in_ki_unit=0.7;
+            Ef_max_in_ki_unit=1.3;    
+        }
+        else if(document.getElementById('WideAngleDet').checked){
+            Qrange_in_ki_unit=1.2;
+            Ef_min_in_ki_unit=0.1;
+            Ef_max_in_ki_unit=1.4;    
+        }  
     }
-    else if(document.getElementById("QErange_WA").checked){
-        Qrange_in_ki_unit=1.2;
-        Ef_min_in_ki_unit=0.1;
-        Ef_max_in_ki_unit=1.4;    
-    }
+    
 
     for(var ii=0;ii<Ei_numMax;ii+=1){
         var canvasName='CanvasQE'+(Math.round(ii+1));

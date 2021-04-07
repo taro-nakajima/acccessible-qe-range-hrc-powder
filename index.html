@@ -10,7 +10,7 @@
 </script>
 <title >Accessible Q-E range at HRC(BL12) for powder samples</title>
 <link rel="stylesheet" type="text/css" href="./common.css">
-<script type="text/javascript" src="./HRC_QErange_powder.js?20210407v2"></script>
+<script type="text/javascript" src="./HRC_QErange_powder.js?20210407v3"></script>
 </head>
 <body onload="draw()">
     <div class="fullbox">
@@ -195,9 +195,8 @@
 <br />
 
 <b><i>Q-E</i> range</b><br />
-<input type="radio" name="QErange_type" id="QErange_WA" checked><label target="freeRot"> For wide-angle : <i>Q</i><sub>max</sub> = 1.2 <i>k</i><sub>i</sub>, 0.1<i>E</i><sub>i</sub> < <i>E</i><sub>f</sub> < 1.4<i>E</i><sub>i</sub></label><br />
-<input type="radio" name="QErange_type" id="QErange_SA"><label target="freeRot"> For small-angle : <i>Q</i><sub>max</sub> = 0.2 <i>k</i><sub>i</sub>, 0.7<i>E</i><sub>i</sub> < <i>E</i><sub>f</sub> < 1.3<i>E</i><sub>i</sub> </label><br />
-<input type="radio" name="QErange_type" id="QErange_Man"><label target="freeRot"> Manual input : </label>
+<input type="radio" name="QErange_type" id="QErange_Std" checked><label target="freeRot"> Standard setting (for wide-angle : <i>Q</i><sub>max</sub> = 1.2<i>k</i><sub>i</sub>, 0.1<i>E</i><sub>i</sub> < <i>E</i><sub>f</sub> < 1.4<i>E</i><sub>i</sub>, for small-angle : <i>Q</i><sub>max</sub> = 0.2<i>k</i><sub>i</sub>, 0.7<i>E</i><sub>i</sub> < <i>E</i><sub>f</sub> < 1.3<i>E</i><sub>i</sub> </label><br />
+<input type="radio" name="QErange_type" id="QErange_Man"><label target="freeRot"> Manual setting : </label>
 <i>Q</i><sub>max</sub>= <input type="text" size="4" id="Q_max" value="1.2"><i>k</i><sub>i</sub>,  
 <input type="text" size="4" id="Ef_max" value="1.4"><i>E</i><sub>i</sub> < <i>E</i><sub>f</sub> < <input type="text" size="4" id="Ef_min" value="0.1"><i>E</i><sub>i</sub> <br />
 <input type="button" value="   set   " onclick="draw()"/><br />
