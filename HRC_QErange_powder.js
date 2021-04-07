@@ -1,5 +1,5 @@
 //JavaScript code for calculating accessible Q-E ranges at HRC for powder samples
-const version = "1.0";
+const version = "1.1";
 const Ei_numMax=5;
 var Ei = new Array(Ei_numMax);
 const decimal_digit = 1000;
@@ -75,8 +75,14 @@ function init(){
     LT0 = LT0_R*Lscale; 
     TOF_len = TOF_len_R*TOFscale;
 
-    tth_max = Number(document.getElementById('tth_max').value);
-    tth_min = Number(document.getElementById('tth_min').value);
+    if(document.getElementById('SmallAngleDet').checked){
+        tth_max = 6.8;  
+        tth_min = 0.6;  
+    }
+    else if(document.getElementById('WideAngleDet').checked){
+        tth_max = 64.16;  
+        tth_min = 3.0;   
+    }
 
 }
 
@@ -298,9 +304,21 @@ function drawQELineCuts() {
     let canvas4 = new Array(Ei_numMax);
     let context4 = new Array(Ei_numMax);
 
-    Qrange_in_ki_unit=Number(document.getElementById("Q_max").value);
-    Ef_min_in_ki_unit=Number(document.getElementById("Ef_min").value);
-    Ef_max_in_ki_unit=Number(document.getElementById("Ef_max").value);
+    if(document.getElementById("QErange_Man").checked){
+        Qrange_in_ki_unit=Number(document.getElementById("Q_max").value);
+        Ef_min_in_ki_unit=Number(document.getElementById("Ef_min").value);
+        Ef_max_in_ki_unit=Number(document.getElementById("Ef_max").value);    
+    }
+    else if(document.getElementById("QErange_SA").checked){
+        Qrange_in_ki_unit=0.2;
+        Ef_min_in_ki_unit=0.7;
+        Ef_max_in_ki_unit=1.3;    
+    }
+    else if(document.getElementById("QErange_WA").checked){
+        Qrange_in_ki_unit=1.2;
+        Ef_min_in_ki_unit=0.1;
+        Ef_max_in_ki_unit=1.4;    
+    }
 
     for(var ii=0;ii<Ei_numMax;ii+=1){
         var canvasName='CanvasQE'+(Math.round(ii+1));
