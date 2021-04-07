@@ -76,7 +76,7 @@ function init(){
     TOF_len = TOF_len_R*TOFscale;
 
     if(document.getElementById('SmallAngleDet').checked){
-        tth_max = 6.8;  
+        tth_max = 6.72;  
         tth_min = 0.6;  
     }
     else if(document.getElementById('WideAngleDet').checked){
